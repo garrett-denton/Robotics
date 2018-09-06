@@ -1,3 +1,4 @@
+import lejos.ev3.*;
 
 public class Robot {
 
