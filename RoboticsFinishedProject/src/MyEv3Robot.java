@@ -51,6 +51,7 @@ public class MyEv3Robot {
 			// Making sound indicating we are ready
 			Sound.beepSequenceUp();
 			// Running the infinite loop of the arbitrator
+			// Would not be able to be broken if it weren't for my CloseAndExit class
 			arb.go();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
