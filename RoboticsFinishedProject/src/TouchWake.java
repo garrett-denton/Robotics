@@ -1,4 +1,6 @@
 import lejos.robotics.subsumption.Behavior;
+import lejos.utility.Delay;
+
 import java.rmi.RemoteException;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.port.Port;
@@ -6,7 +8,7 @@ import lejos.hardware.sensor.EV3TouchSensor;
 import lejos.robotics.SampleProvider;
 import lejos.hardware.Button;
 
-public class SwitchMode implements Behavior {
+public class TouchWake implements Behavior {
 
 	// Initializing suppression boolean to false
 	private boolean suppressed = false;
@@ -19,11 +21,10 @@ public class SwitchMode implements Behavior {
 	private float[] pressArray;
 	// Initializing float for button press
 	private float press;
-	// Initializing mode string for print statement
-	private String mode;
-	
+	// Initializing integer for motor speed
+	private int motorSpeed;
 
-	public SwitchMode() {
+	public TouchWake() {
 		// Instantiating port for the color sensor
 		Port sensor = LocalEV3.get().getPort("S3");
 		// Setting touch sensor to the port
@@ -50,29 +51,32 @@ public class SwitchMode implements Behavior {
 		// Static yellow led
 		Button.LEDPattern(3);
 		// Setting mode string for print statement
-		if (MyEv3RobotOld.getSwitchMode()) {
-			setMode("run from light");
-		}
-		else {
-			setMode("follow light");
-		}
-		System.out.println("Mode switched to " + getMode());
 		if(!suppressed)
-			MyEv3RobotOld.flipSwitchMode();
+			wakeUp();
 	}
 
 	public void suppress() {
 		suppressed = true;
 	}
 	
-	// Returns the light tracking mode
-	public String getMode() {
-		return mode;
-	}
-
-	// Sets the string for the light trackinf mode
-	public void setMode(String mode) {
-		this.mode = mode;
+	public void wakeUp() {
+		try {
+			System.out.println("Waking up");
+			// Setting motor speed integer to medium range value
+			motorSpeed = 600;
+			// Setting motor speeds to the motors
+			MyEv3Robot.leftMotor.setSpeed(motorSpeed);
+			MyEv3Robot.rightMotor.setSpeed(motorSpeed);
+			// Tells motors to drive backwards
+			MyEv3Robot.leftMotor.backward();
+			MyEv3Robot.rightMotor.backward();
+			// Holds current function (backwards) for 2 seconds
+			Delay.msDelay(2000);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			// Holds any error messages on the LCD for 5 seconds if they occur
+			Delay.msDelay(5000);
+		}
 	}
 	
 	// Since the sensor are initialized in this class, they can be cleaned and closed in this class
