@@ -28,7 +28,7 @@ public class TailButton {
 				}		
 			}
 			
-			System.out.println("Stopping!");            
+			System.out.println("Stopping!");
 			MyEv3Robot3.leftMotor.stop(true);
 			MyEv3Robot3.rightMotor.stop(true);
 			}

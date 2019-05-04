@@ -17,7 +17,7 @@ public class MyEv3Robot3 {
 			String name = remoteEv3.getName();
 			System.out.println("The name of my device is " + name);
 			
-	        leftMotor = remoteEv3.createRegulatedMotor("C", 'L'); 
+	        leftMotor = remoteEv3.createRegulatedMotor("D", 'L'); 
 	        rightMotor = remoteEv3.createRegulatedMotor("A", 'L');
 	        
 	        Motor.resetMotor(leftMotor);
@@ -26,9 +26,9 @@ public class MyEv3Robot3 {
 	        Button.LEDPattern(3); // solid orange led
 	        Sound.beepSequenceUp(); // make sound indicating we are ready
 	        
-	        MoveOnLight.moveOnLight();
+	        //MoveOnLight.moveOnLight();
 	        
-	        //TailButton.tailButton();
+	        TailButton.tailButton();
 	        
 	        //NoBump.noBump();
 	        
@@ -36,8 +36,8 @@ public class MyEv3Robot3 {
 	        
 	        //AggressiveStraight.aggressiveStraight();
             
-            Delay.msDelay(5000); // Wait for 5 seconds
-            
+            //Delay.msDelay(5000); // Wait for 5 seconds
+	        
             Motor.cleanup(leftMotor);
             Motor.cleanup(rightMotor);
             
